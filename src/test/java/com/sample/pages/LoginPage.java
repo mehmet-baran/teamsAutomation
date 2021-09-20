@@ -10,15 +10,28 @@ public class LoginPage extends CommonPageElements{
         PageFactory.initElements(driver,this);
     }
 
-    @FindBy(id = "Username-Field")
-    public WebElement usernameTextbox;
+    @FindBy(name = "loginfmt")
+    public WebElement emailTextbox;
 
-    @FindBy(id = "Password-Field")
+    @FindBy(id = "idSIButton9")
+    public WebElement nextButton;
+
+    @FindBy(id = "i0118")
     public WebElement passwordTextbox;
 
-    @FindBy(css = "[type=\"submit\"]")
-    public WebElement loginButton;
+    @FindBy(css = "[value=\"Sign in\"]")
+    public WebElement submitButton;
 
+    @FindBy(id = "idChkBx_SAOTCC_TD")
+    public WebElement dontAskCheckbox;
 
+    @FindBy(id = "idSubmit_SAOTCC_Continue")
+    public WebElement verifyButton;
+
+    @FindBy(id = "KmsiCheckboxField")
+    public WebElement staySignedCheckbox;
+
+    @FindBy(css = "[value=\"Yes\"]")
+    public WebElement yesButton;
 
 }
