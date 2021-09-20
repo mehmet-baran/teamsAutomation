@@ -38,7 +38,7 @@ public class LoginSteps extends CommonSteps {
     }
 
     @Given("the user navigates to the meeting link")
-    public void the_user_navigates_to_the_meeting_link()  {
+    public void the_user_navigates_to_the_meeting_link() {
         driver.get(ConfigurationReader.get("url2"));
     }
 
@@ -50,37 +50,44 @@ public class LoginSteps extends CommonSteps {
         meetingLoginPage.continueOnBrowserButton.click();
     }
 
-    @Given("the user waits for the meeting link")
-    public void the_user_waits_for_the_meeting_link() {
+    @Given("the user waits for the meeting link and once it's provided navigates to that link")
+    public void the_user_waits_for_the_meeting_link_and_once_it_s_provided_navigates_to_that_link() throws IOException, InterruptedException {
         byte testDurationInDays = 7;
         LocalDateTime finalTime = LocalDateTime.now().plus(Duration.ofDays(testDurationInDays));
-        while (LocalDateTime.now().isBefore(finalTime)){
-            if(ConfigurationReader.get("url3").isEmpty()){
-                waitFor(60);
-            }else {
-                break;
+        boolean flag=true;
+        while (LocalDateTime.now().isBefore(finalTime) && flag) {
+
+            String cmd = "aws ssm get-parameter --name \"QMUL-WifiTesting-MeetingLink\" --region \"eu-west-1\"";
+            Runtime run = Runtime.getRuntime();
+            Process pr = run.exec(cmd);
+            pr.waitFor();
+            BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+            String line = "";
+
+            while ((line = buf.readLine()) != null) {
+
+                if (line.contains("Value")) {
+
+                    String result = line;
+                    String[] resultArray = result.split("\"");
+                    String url = resultArray[3];
+
+                    if (url.equalsIgnoreCase("empty")) {
+                        //driver.get(url);
+                        driver.get(ConfigurationReader.get("url2"));
+                        flag=false;
+                        break;
+                    } else {
+                        waitFor(60);
+                    }
+
+                }
+
             }
+
         }
     }
 
-    @When("the meeting link is provided the user navigates to the meeting link")
-    public void the_meeting_link_is_provided_the_user_navigates_to_the_meeting_link() {
-        driver.get(ConfigurationReader.get("url2"));
-    }
-
-    @Given("reach to cli and execute the code")
-    public void reach_to_cli_and_execute_the_code() throws IOException, InterruptedException {
-        String cmd = "java --version";
-        Runtime run = Runtime.getRuntime();
-        Process pr = run.exec(cmd);
-        pr.waitFor();
-        BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-        String line = "";
-        while ((line=buf.readLine())!=null) {
-            System.out.println(line);
-        }
-
-    }
 
 
 

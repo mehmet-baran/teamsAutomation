@@ -1,24 +1,22 @@
 Feature: teams automation feature
 
-  @teamsWebsite
+  @option1
   Scenario: Joining a meeting through teams homepage
     Given the user logs in through teams website
     When the user clicks on Activity tab
     Then the user should be able to join the meeting
+    Then the user should be able to stay in the meeting room until it's ended
 
-  @teamsLinkOneMeeting
+  @option2
   Scenario: Joining a meeting by using a meeting link
     Given the user navigates to the meeting link
     When the user continues on browser instead of Teams application
     Then the user should be able to join the meeting with a username
 
-  @teamsLinkContinuousWaiting
+  @option3
   Scenario: Waiting a meeting link is provided and once it's provided join the meeting
-    Given the user waits for the meeting link
-    When the meeting link is provided the user navigates to the meeting link
-    And the user continues on browser instead of Teams application
-    Then the user should be able to join the meeting with a username
+    Given the user waits for the meeting link and once it's provided navigates to that link
+    When the user continues on browser instead of Teams application
+    And the user should be able to join the meeting with a username
+    Then the user should be able to stay in the meeting room until it's ended
 
-    @cli
-    Scenario: cli
-      Given reach to cli and execute the code

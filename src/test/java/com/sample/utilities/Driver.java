@@ -1,6 +1,7 @@
 package com.sample.utilities;
 
 import com.sample.pages.PageInitializer;
+import io.appium.java_client.windows.WindowsDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -13,11 +14,14 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class Driver {
 
     public static WebDriver driver;
+    public static WindowsDriver windowsDriver=null;
 
     /*
      * This method will create a driver and return it
@@ -64,6 +68,8 @@ public class Driver {
                 WebDriverManager.getInstance(SafariDriver.class).setup();
                 driver = new SafariDriver();
                 break;
+
+
         }
 
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -71,6 +77,21 @@ public class Driver {
 
         PageInitializer.initialize();
         return driver;
+    }
+    public static void winAppDriverSetUp(){
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+
+
+        desiredCapabilities.setCapability("app", "C:\\Program Files\\obs-studio\\bin\\64bit\\obs64.exe");
+        desiredCapabilities.setCapability("platformName", "Windows");
+        desiredCapabilities.setCapability("deviceName", "WindowsPC");
+        desiredCapabilities.setCapability("app", "Root");
+        try {
+            windowsDriver = new WindowsDriver(new URL("http://127.0.0.1:4723"), desiredCapabilities);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        windowsDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     /*
