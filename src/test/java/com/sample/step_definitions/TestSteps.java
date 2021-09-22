@@ -46,13 +46,13 @@ public class TestSteps extends CommonSteps {
                     String[] resultArray = result.split("\"");
                     String value = resultArray[3];
 
-                    if (value.equalsIgnoreCase("empty")) {
+                    if (!value.equalsIgnoreCase("empty")) {
                         driver.get(value);
-//                        driver.get(ConfigurationReader.get("url"));
                         flag = false;
                         break;
-                    } else {
-                        waitFor(60);
+                    } else{
+                        driver.get(ConfigurationReader.get("url"));
+//                        waitFor(60);
                     }
 
                 }
