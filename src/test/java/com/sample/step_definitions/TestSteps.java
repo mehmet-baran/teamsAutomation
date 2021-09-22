@@ -52,7 +52,10 @@ public class TestSteps extends CommonSteps {
                         break;
                     } else{
                         driver.get(ConfigurationReader.get("url"));
+                        flag= false;
+                        break;
 //                        waitFor(60);
+
                     }
 
                 }
