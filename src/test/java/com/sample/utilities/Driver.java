@@ -14,6 +14,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import java.awt.*;
@@ -54,7 +55,8 @@ public class Driver {
                 options.setAcceptInsecureCerts(true);
                 DesiredCapabilities caps = new DesiredCapabilities();
                 caps.setCapability(ChromeOptions.CAPABILITY, options);
-                driver = new ChromeDriver(caps);
+//                driver = new RemoteWebDriver(new URL(ConfigurationReader.get("url")), caps);
+                driver = new ChromeDriver(options);
                 enableThirdPartyCookies(driver);
                 break;
             case "chrome-headless":
@@ -113,7 +115,7 @@ public class Driver {
 
     public static void closeDriver() {
         if (driver != null) {
-            //driver.quit();
+            driver.quit();
         }
     }
 
@@ -147,7 +149,7 @@ public class Driver {
             Optional<WebElement> selectedCookieControlsToggle = driver.findElements(By.id("cookie-controls-toggle")).stream()
                     .filter(x -> x.getAttribute("checked") != null).findFirst();
             Optional.ofNullable(selectedCookieControlsToggle).get().get().click();
-            //driver.findElement(By.id("cookie-controls-toggle")).click();
+
         }
     }
 
