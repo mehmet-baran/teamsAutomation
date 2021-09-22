@@ -6,6 +6,7 @@ Feature: teams automation feature
     When the user clicks on Activity tab
     Then the user should be able to join the meeting
     Then the user should be able to stay in the meeting room until it's ended
+    Then the user should be able to wait for a new meeting link in idle condition
 
   @option2
   Scenario: Joining a meeting by using a meeting link
@@ -19,4 +20,5 @@ Feature: teams automation feature
     When the user continues on browser instead of Teams application
     And the user should be able to join the meeting with a username
     Then the user should be able to stay in the meeting room until it's ended
+    Then the user should be able to wait for a new meeting link
 

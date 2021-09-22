@@ -10,7 +10,7 @@ import java.net.MalformedURLException;
 public class Hooks {
 
     @Before
-    public void start() throws MalformedURLException {
+    public void start() throws Exception {
         Driver.setUp();
     }
 
@@ -26,7 +26,7 @@ public class Hooks {
 //        }
 //
 //        scenario.attach(picture, "image/png", scenario.getName());
-        Thread.sleep(5000);
+        Thread.sleep(2000);
         Driver.closeDriver();
     }
 
